@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Krishi Mitraan Dashboard - Monitor sensors, detect diseases, check weather, and manage your farm intelligently.">
+  <title>Dashboard – Krishi Mitraan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ── Sidebar ─────────────────────────────────────── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a href="index.html" class="sidebar-logo">
+        <div class="logo-icon">🌾</div>
+        <span>Krishi <em>Mitraan</em></span>
+      </a>
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">
+        <span class="material-icons-round">close</span>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="home" id="nav-home">
+        <span class="material-icons-round">home</span>
+        <span class="nav-label">Home</span>
+      </a>
+      <a href="#" class="nav-item" data-section="crop-advisory" id="nav-crop-advisory">
+        <span class="material-icons-round">eco</span>
+        <span class="nav-label">Crop Advisory</span>
+      </a>
+      <a href="#" class="nav-item" data-section="disease-detection" id="nav-disease-detection">
+        <span class="material-icons-round">biotech</span>
+        <span class="nav-label">Disease Detection</span>
+      </a>
+      <a href="#" class="nav-item" data-section="sensor-data" id="nav-sensor-data">
+        <span class="material-icons-round">sensors</span>
+        <span class="nav-label">Live Sensors</span>
+      </a>
+      <a href="#" class="nav-item" data-section="irrigation" id="nav-irrigation">
+        <span class="material-icons-round">water_drop</span>
+        <span class="nav-label">Irrigation</span>
+      </a>
+      <a href="#" class="nav-item" data-section="fertilizer" id="nav-fertilizer">
+        <span class="material-icons-round">science</span>
+        <span class="nav-label">Fertilizer</span>
+      </a>
+      <a href="#" class="nav-item" data-section="soil-health" id="nav-soil-health">
+        <span class="material-icons-round">landscape</span>
+        <span class="nav-label">Soil Health</span>
+      </a>
+      <a href="#" class="nav-item" data-section="weather" id="nav-weather">
+        <span class="material-icons-round">cloud</span>
+        <span class="nav-label">Weather</span>
+      </a>
+      <a href="#" class="nav-item" data-section="voice-assistant" id="nav-voice-assistant">
+        <span class="material-icons-round">mic</span>
+        <span class="nav-label">Voice Assistant</span>
+      </a>
+      <a href="#" class="nav-item" data-section="mandi-prices" id="nav-mandi-prices">
+        <span class="material-icons-round">storefront</span>
+        <span class="nav-label">Mandi Prices</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="lang-selector">
+        <span class="material-icons-round">translate</span>
+        <select id="langSelect">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="kn">ಕನ್ನಡ</option>
+          <option value="te">తెలుగు</option>
+          <option value="ta">தமிழ்</option>
+        </select>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ────────────────────────────────── -->
+  <main class="main-content" id="mainContent">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span class="material-icons-round">menu</span>
+      </button>
+      <div class="topbar-title" id="topbarTitle">
+        <h1>Welcome Back, Farmer!</h1>
+        <p class="topbar-subtitle" id="topbarSubtitle">Here's your farm overview</p>
+      </div>
+      <div class="topbar-actions">
+        <div class="connection-status" id="connectionStatus">
+          <span class="status-dot online"></span>
+          <span>Backend Online</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dynamic Content Area -->
+    <div class="content-area" id="contentArea">
+
+      <!-- ════════════════ HOME SECTION ════════════════ -->
+      <section class="section active" id="section-home">
+        <div class="quick-stats">
+          <div class="quick-stat-card stat-moisture">
+            <div class="qs-icon">
+              <span class="material-icons-round">water_drop</span>
+            </div>
+            <div class="qs-info">
+              <div class="qs-value" id="home-moisture">--</div>
+              <div class="qs-label" data-i18n="moisture">Soil Moisture</div>
+            </div>
+            <div class="qs-trend up">
+              <span class="material-icons-round">trending_up</span>
+            </div>
+          </div>
+          <div class="quick-stat-card stat-temp">
+            <div class="qs-icon">
+              <span class="material-icons-round">thermostat</span>
+            </div>
+            <div class="qs-info">
+              <div class="qs-value" id="home-temperature">--</div>
+              <div class="qs-label" data-i18n="temperature">Temperature</div>
+            </div>
+            <div class="qs-trend neutral">
+              <span class="material-icons-round">trending_flat</span>
+            </div>
+          </div>
+          <div class="quick-stat-card stat-humidity">
+            <div class="qs-icon">
+              <span class="material-icons-round">humidity_percentage</span>
+            </div>
+            <div class="qs-info">
+              <div class="qs-value" id="home-humidity">--</div>
+              <div class="qs-label" data-i18n="humidity">Humidity</div>
+            </div>
+            <div class="qs-trend up">
+              <span class="material-icons-round">trending_up</span>
+            </div>
+          </div>
+          <div class="quick-stat-card stat-pump">
+            <div class="qs-icon">
+              <span class="material-icons-round">power</span>
+            </div>
+            <div class="qs-info">
+              <div class="qs-value" id="home-pump">N/A</div>
+              <div class="qs-label" data-i18n="pump_status">Pump Status</div>
+            </div>
+            <div class="qs-trend neutral">
+              <span class="material-icons-round">circle</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-grid">
+          <div class="home-card welcome-card">
+            <div class="welcome-content">
+              <h2 data-i18n="welcome_title">🌾 Welcome to Krishi Mitraan</h2>
+              <p data-i18n="welcome_desc">Your AI-powered smart farming companion. Navigate through the sidebar to access crop advisory, disease detection, live sensor data, weather updates, and more.</p>
+              <div class="welcome-features">
+                <div class="wf-item" onclick="navigateTo('disease-detection')">
+                  <span class="material-icons-round">biotech</span>
+                  <span data-i18n="detect_disease">Detect Disease</span>
+                </div>
+                <div class="wf-item" onclick="navigateTo('sensor-data')">
+                  <span class="material-icons-round">sensors</span>
+                  <span data-i18n="live_sensors">Live Sensors</span>
+                </div>
+                <div class="wf-item" onclick="navigateTo('weather')">
+                  <span class="material-icons-round">cloud</span>
+                  <span data-i18n="weather">Weather</span>
+                </div>
+                <div class="wf-item" onclick="navigateTo('voice-assistant')">
+                  <span class="material-icons-round">mic</span>
+                  <span data-i18n="voice_assistant">Voice Assistant</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="home-card tip-card">
+            <h3><span class="material-icons-round">tips_and_updates</span> <span data-i18n="tip_of_day">Tip of the Day</span></h3>
+            <p id="dailyTip" data-i18n="daily_tip">Early morning irrigation reduces water evaporation by up to 35%. Consider installing drip irrigation for water-intensive crops.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ CROP ADVISORY ════════════════ -->
+      <section class="section" id="section-crop-advisory">
+        <div class="section-header">
+          <h2><span class="material-icons-round">eco</span> <span data-i18n="crop_advisory">Crop Advisory</span></h2>
+          <p data-i18n="crop_advisory_desc">Search for any crop to get detailed growing information and advisory</p>
+        </div>
+        <div class="search-box">
+          <span class="material-icons-round">search</span>
+          <input type="text" id="cropSearchInput" placeholder="Search crop (e.g., Rice, Wheat, Tomato...)" data-i18n-placeholder="search_crop">
+          <button class="btn-action" id="cropSearchBtn">
+            <span class="material-icons-round">arrow_forward</span>
+          </button>
+        </div>
+        <div class="crop-suggestions">
+          <span data-i18n="popular">Popular:</span>
+          <button class="chip" onclick="searchCrop('Rice')">🌾 Rice</button>
+          <button class="chip" onclick="searchCrop('Wheat')">🌿 Wheat</button>
+          <button class="chip" onclick="searchCrop('Tomato')">🍅 Tomato</button>
+          <button class="chip" onclick="searchCrop('Potato')">🥔 Potato</button>
+          <button class="chip" onclick="searchCrop('Sugarcane')">🎋 Sugarcane</button>
+        </div>
+        <div id="cropResult" class="result-area"></div>
+      </section>
+
+      <!-- ════════════════ DISEASE DETECTION ════════════════ -->
+      <section class="section" id="section-disease-detection">
+        <div class="section-header">
+          <h2><span class="material-icons-round">biotech</span> <span data-i18n="disease_detection">Disease Detection</span></h2>
+          <p data-i18n="disease_desc">Upload a photo of a crop leaf to detect diseases using AI</p>
+        </div>
+        <div class="upload-area" id="uploadArea">
+          <div class="upload-content" id="uploadContent">
+            <span class="material-icons-round upload-icon">cloud_upload</span>
+            <h3 data-i18n="drop_image">Drop your image here</h3>
+            <p data-i18n="or_browse">or click to browse files</p>
+            <p class="upload-hint" data-i18n="upload_hint">Supports JPG, PNG, WEBP (Max 10MB)</p>
+          </div>
+          <img id="previewImage" class="preview-image" style="display:none;" alt="Preview">
+          <input type="file" id="imageInput" accept="image/*" hidden>
+        </div>
+        <div class="upload-actions">
+          <button class="btn-primary-action" id="detectBtn" disabled>
+            <span class="material-icons-round">search</span>
+            <span data-i18n="analyze">Analyze Image</span>
+          </button>
+          <button class="btn-secondary-action" id="resetUploadBtn" style="display:none;">
+            <span class="material-icons-round">refresh</span>
+            <span data-i18n="reset">Reset</span>
+          </button>
+        </div>
+        <div id="detectionResult" class="result-area"></div>
+      </section>
+
+      <!-- ════════════════ SENSOR DATA ════════════════ -->
+      <section class="section" id="section-sensor-data">
+        <div class="section-header">
+          <h2><span class="material-icons-round">sensors</span> <span data-i18n="live_sensor_data">Live Sensor Data</span></h2>
+          <p data-i18n="sensor_desc">Real-time data from IoT sensors in your field</p>
+          <div class="live-badge">
+            <span class="live-dot"></span>
+            <span data-i18n="live">LIVE</span>
+          </div>
+        </div>
+        <div class="sensor-grid">
+          <div class="sensor-card moisture-card">
+            <div class="sensor-icon">
+              <span class="material-icons-round">water_drop</span>
+            </div>
+            <div class="sensor-value" id="sensor-moisture">--</div>
+            <div class="sensor-label" data-i18n="soil_moisture">Soil Moisture</div>
+            <div class="sensor-bar">
+              <div class="sensor-bar-fill moisture-fill" id="moisture-bar" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="sensor-card temp-card">
+            <div class="sensor-icon">
+              <span class="material-icons-round">thermostat</span>
+            </div>
+            <div class="sensor-value" id="sensor-temperature">--</div>
+            <div class="sensor-label" data-i18n="temperature">Temperature</div>
+            <div class="sensor-bar">
+              <div class="sensor-bar-fill temp-fill" id="temp-bar" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="sensor-card humidity-card">
+            <div class="sensor-icon">
+              <span class="material-icons-round">humidity_percentage</span>
+            </div>
+            <div class="sensor-value" id="sensor-humidity">--</div>
+            <div class="sensor-label" data-i18n="humidity">Humidity</div>
+            <div class="sensor-bar">
+              <div class="sensor-bar-fill humidity-fill" id="humidity-bar" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="sensor-card pump-card">
+            <div class="sensor-icon">
+              <span class="material-icons-round">power</span>
+            </div>
+            <div class="sensor-value" id="sensor-pump">N/A</div>
+            <div class="sensor-label" data-i18n="water_pump">Water Pump</div>
+            <div class="pump-indicator" id="pump-indicator">
+              <div class="pump-dot" id="pump-dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="sensor-timestamp">
+          <span class="material-icons-round">schedule</span>
+          <span data-i18n="last_updated">Last Updated:</span>
+          <span id="sensor-timestamp">--</span>
+        </div>
+        <div class="sensor-irr-reason" id="sensor-irr-reason"></div>
+      </section>
+
+      <!-- ════════════════ IRRIGATION ════════════════ -->
+      <section class="section" id="section-irrigation">
+        <div class="section-header">
+          <h2><span class="material-icons-round">water_drop</span> <span data-i18n="irrigation_advice">Irrigation Advice</span></h2>
+          <p data-i18n="irrigation_desc">Smart irrigation recommendations based on sensor data</p>
+        </div>
+        <div id="irrigationContent" class="irrigation-content">
+          <div class="irrigation-status-card" id="irrigationStatusCard">
+            <div class="irrigation-icon">
+              <span class="material-icons-round">hourglass_empty</span>
+            </div>
+            <h3 data-i18n="loading_data">Loading sensor data...</h3>
+            <p data-i18n="fetching_sensor">Fetching latest sensor readings to generate recommendations</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ FERTILIZER ════════════════ -->
+      <section class="section" id="section-fertilizer">
+        <div class="section-header">
+          <h2><span class="material-icons-round">science</span> <span data-i18n="fertilizer_advice">Fertilizer Advice</span></h2>
+          <p data-i18n="fertilizer_desc">Get NPK-based fertilizer recommendations for your crop</p>
+        </div>
+        <div class="form-card">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="fertCrop" data-i18n="crop_name">Crop Name</label>
+              <input type="text" id="fertCrop" placeholder="e.g., Rice, Wheat" data-i18n-placeholder="crop_example">
+            </div>
+            <div class="form-group">
+              <label for="fertN" data-i18n="nitrogen_n">Nitrogen (N) kg/ha</label>
+              <input type="number" id="fertN" placeholder="e.g., 45" min="0" max="200">
+            </div>
+            <div class="form-group">
+              <label for="fertP" data-i18n="phosphorus_p">Phosphorus (P) kg/ha</label>
+              <input type="number" id="fertP" placeholder="e.g., 30" min="0" max="200">
+            </div>
+            <div class="form-group">
+              <label for="fertK" data-i18n="potassium_k">Potassium (K) kg/ha</label>
+              <input type="number" id="fertK" placeholder="e.g., 25" min="0" max="200">
+            </div>
+          </div>
+          <button class="btn-primary-action" id="fertBtn">
+            <span class="material-icons-round">analytics</span>
+            <span data-i18n="get_recommendation">Get Recommendation</span>
+          </button>
+        </div>
+        <div id="fertResult" class="result-area"></div>
+      </section>
+
+      <!-- ════════════════ SOIL HEALTH ════════════════ -->
+      <section class="section" id="section-soil-health">
+        <div class="section-header">
+          <h2><span class="material-icons-round">landscape</span> <span data-i18n="soil_health">Soil Health Analysis</span></h2>
+          <p data-i18n="soil_desc">Analyze your soil parameters and get improvement advice</p>
+        </div>
+        <div class="form-card">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="soilPH" data-i18n="soil_ph">Soil pH</label>
+              <input type="number" id="soilPH" placeholder="e.g., 6.5" min="0" max="14" step="0.1">
+            </div>
+            <div class="form-group">
+              <label for="soilOM" data-i18n="organic_matter">Organic Matter (%)</label>
+              <input type="number" id="soilOM" placeholder="e.g., 2.5" min="0" max="20" step="0.1">
+            </div>
+            <div class="form-group">
+              <label for="soilMoisture" data-i18n="moisture_pct">Moisture (%)</label>
+              <input type="number" id="soilMoisture" placeholder="e.g., 55" min="0" max="100">
+            </div>
+          </div>
+          <button class="btn-primary-action" id="soilBtn">
+            <span class="material-icons-round">analytics</span>
+            <span data-i18n="analyze_soil">Analyze Soil</span>
+          </button>
+        </div>
+        <div id="soilResult" class="result-area"></div>
+      </section>
+
+      <!-- ════════════════ WEATHER ════════════════ -->
+      <section class="section" id="section-weather">
+        <div class="section-header">
+          <h2><span class="material-icons-round">cloud</span> <span data-i18n="weather_forecast">Weather Forecast</span></h2>
+          <p data-i18n="weather_desc">Current weather conditions for your location</p>
+        </div>
+        <div class="search-box">
+          <span class="material-icons-round">location_on</span>
+          <input type="text" id="weatherCityInput" placeholder="Enter city name (e.g., Bangalore)" data-i18n-placeholder="enter_city">
+          <button class="btn-action" id="weatherSearchBtn">
+            <span class="material-icons-round">search</span>
+          </button>
+        </div>
+        <div id="weatherResult" class="result-area"></div>
+      </section>
+
+      <!-- ════════════════ VOICE ASSISTANT ════════════════ -->
+      <section class="section" id="section-voice-assistant">
+        <div class="section-header">
+          <h2><span class="material-icons-round">mic</span> <span data-i18n="voice_assistant">Voice Assistant</span></h2>
+          <p data-i18n="voice_desc">Ask farming questions using your voice or text</p>
+        </div>
+        <div class="voice-container">
+          <div class="voice-chat" id="voiceChat">
+            <div class="chat-message bot-message">
+              <div class="chat-avatar">🌾</div>
+              <div class="chat-bubble">
+                <p data-i18n="voice_greeting">Namaste! I'm your Krishi Mitraan voice assistant. Ask me anything about farming, crops, weather, or agriculture.</p>
+              </div>
+            </div>
+          </div>
+          <div class="voice-input-area">
+            <input type="text" id="voiceTextInput" placeholder="Type your question or use the mic..." data-i18n-placeholder="type_question">
+            <button class="voice-mic-btn" id="voiceMicBtn" aria-label="Record voice">
+              <span class="material-icons-round">mic</span>
+            </button>
+            <button class="voice-send-btn" id="voiceSendBtn" aria-label="Send message">
+              <span class="material-icons-round">send</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════ MANDI PRICES ════════════════ -->
+      <section class="section" id="section-mandi-prices">
+        <div class="section-header">
+          <h2><span class="material-icons-round">storefront</span> <span data-i18n="mandi_prices">Mandi Prices</span></h2>
+          <p data-i18n="mandi_desc">Latest agricultural commodity prices from Indian markets</p>
+        </div>
+        <div class="search-box">
+          <span class="material-icons-round">search</span>
+          <input type="text" id="mandiSearchInput" placeholder="Search commodity (e.g., Wheat, Rice, Onion)" data-i18n-placeholder="search_commodity">
+          <button class="btn-action" id="mandiSearchBtn">
+            <span class="material-icons-round">search</span>
+          </button>
+        </div>
+        <div id="mandiResult" class="result-area">
+          <div class="mandi-default-grid" id="mandiDefaultGrid"></div>
+        </div>
+      </section>
+
+    </div><!-- end content-area -->
+  </main>
+
+  <!-- Mobile Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- TensorFlow.js Library & Models (For Free, Client-side Image Classification) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.17.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>

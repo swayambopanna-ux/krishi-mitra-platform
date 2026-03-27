@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Krishi Mitraan - AI-Powered Smart Agriculture Platform. Monitor crops, detect diseases, track weather, and optimize farming with IoT sensors.">
+  <title>Krishi Mitraan – Smart Agriculture Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #16a34a;
+      --primary-light: #22c55e;
+      --primary-dark: #15803d;
+      --accent: #f59e0b;
+      --bg-dark: #0a0f0d;
+      --bg-card: rgba(22, 163, 74, 0.06);
+      --text: #e8f5e9;
+      --text-muted: #94a3b8;
+      --glow: 0 0 40px rgba(22, 163, 74, 0.3);
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── Animated Background ─────────────────────────── */
+    .bg-animation {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-animation .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(22,163,74,0.15), transparent 70%);
+      animation: floatCircle 20s infinite ease-in-out;
+    }
+    .bg-animation .circle:nth-child(1) { width: 600px; height: 600px; top: -10%; left: -10%; animation-delay: 0s; }
+    .bg-animation .circle:nth-child(2) { width: 400px; height: 400px; top: 50%; right: -5%; animation-delay: -7s; background: radial-gradient(circle, rgba(245,158,11,0.1), transparent 70%); }
+    .bg-animation .circle:nth-child(3) { width: 500px; height: 500px; bottom: -15%; left: 30%; animation-delay: -14s; }
+
+    @keyframes floatCircle {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -30px) scale(1.05); }
+      50% { transform: translate(-20px, 20px) scale(0.95); }
+      75% { transform: translate(15px, 10px) scale(1.02); }
+    }
+
+    /* ── Particles ────────────────────────────────────── */
+    .particles {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .particle {
+      position: absolute;
+      width: 3px; height: 3px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      opacity: 0;
+      animation: particleFloat 8s infinite;
+    }
+
+    @keyframes particleFloat {
+      0% { opacity: 0; transform: translateY(100vh) scale(0); }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.2; }
+      100% { opacity: 0; transform: translateY(-10vh) scale(1); }
+    }
+
+    /* ── Navbar ───────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(20px);
+      background: rgba(10, 15, 13, 0.7);
+      border-bottom: 1px solid rgba(22, 163, 74, 0.15);
+      transition: all 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(10, 15, 13, 0.95);
+      box-shadow: var(--glow);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .nav-logo .logo-icon {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 15px rgba(22,163,74,0.4);
+    }
+    .nav-logo span {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+    .nav-logo span em {
+      font-style: normal;
+      color: var(--primary-light);
+    }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover { color: var(--primary-light); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--primary-light);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff !important;
+      padding: 0.6rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(22,163,74,0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(22,163,74,0.6);
+    }
+    .nav-cta::after { display: none !important; }
+
+    /* ── Hero ─────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.2rem;
+      background: rgba(22,163,74,0.1);
+      border: 1px solid rgba(22,163,74,0.25);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      color: var(--primary-light);
+      font-weight: 500;
+      margin-bottom: 2rem;
+      animation: fadeInDown 0.8s ease;
+    }
+    .hero-badge .dot {
+      width: 8px; height: 8px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.5); }
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s ease;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--primary-light), var(--accent), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(22,163,74,0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(22,163,74,0.6);
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-3px);
+    }
+
+    /* ── Stats ────────────────────────────────────────── */
+    .stats {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: -2rem auto 4rem;
+      padding: 0 2rem;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .stat-card:hover {
+      background: rgba(22,163,74,0.08);
+      border-color: rgba(22,163,74,0.2);
+      transform: translateY(-5px);
+    }
+    .stat-card .number {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary-light);
+    }
+    .stat-card .label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ── Features ─────────────────────────────────────── */
+    .features {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto 6rem;
+      padding: 0 2rem;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-title h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(22,163,74,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-card:hover {
+      border-color: rgba(22,163,74,0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .feature-icon {
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      position: relative;
+      z-index: 1;
+    }
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .fi-green { background: linear-gradient(135deg, rgba(22,163,74,0.2), rgba(22,163,74,0.05)); color: #4ade80; }
+    .fi-amber { background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(245,158,11,0.05)); color: #fbbf24; }
+    .fi-blue { background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(59,130,246,0.05)); color: #60a5fa; }
+    .fi-purple { background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(168,85,247,0.05)); color: #c084fc; }
+    .fi-rose { background: linear-gradient(135deg, rgba(244,63,94,0.2), rgba(244,63,94,0.05)); color: #fb7185; }
+    .fi-teal { background: linear-gradient(135deg, rgba(20,184,166,0.2), rgba(20,184,166,0.05)); color: #2dd4bf; }
+
+    /* ── Footer ───────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    footer p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: var(--primary-light);
+      text-decoration: none;
+    }
+
+    /* ── Animations ───────────────────────────────────── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 1rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-animation">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+
+  <div class="particles" id="particles"></div>
+
+  <nav id="navbar">
+    <a href="#" class="nav-logo">
+      <div class="logo-icon">🌾</div>
+      <span>Krishi <em>Mitraan</em></span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#about">About</a>
+      <a href="dashboard.html" class="nav-cta">Open Dashboard</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">
+      <div class="dot"></div>
+      AI-Powered Smart Agriculture
+    </div>
+    <h1>
+      Farming Made<br>
+      <span class="gradient-text">Intelligent & Easy</span>
+    </h1>
+    <p>
+      Monitor your farm in real-time with IoT sensors, detect crop diseases using AI, 
+      get weather updates, and optimize irrigation — all from one beautiful dashboard.
+    </p>
+    <div class="hero-buttons">
+      <a href="dashboard.html" class="btn btn-primary">
+        <span class="material-icons-round">dashboard</span>
+        Open Dashboard
+      </a>
+      <a href="#features" class="btn btn-secondary">
+        <span class="material-icons-round">explore</span>
+        Explore Features
+      </a>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="number" id="stat1">9+</div>
+      <div class="label">Smart Modules</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">24/7</div>
+      <div class="label">Real-time Monitoring</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">AI</div>
+      <div class="label">Disease Detection</div>
+    </div>
+    <div class="stat-card">
+      <div class="number">IoT</div>
+      <div class="label">Sensor Integration</div>
+    </div>
+  </div>
+
+  <section class="features" id="features">
+    <div class="section-title">
+      <h2>Powerful Features</h2>
+      <p>Everything you need to modernize your farming operations</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon fi-green">🔬</div>
+        <h3>AI Disease Detection</h3>
+        <p>Upload a photo of your crop leaf and our AI model instantly identifies diseases with confidence scores.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-blue">📡</div>
+        <h3>Live Sensor Data</h3>
+        <p>Real-time soil moisture, temperature, and humidity data from IoT sensors connected to your field.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-amber">💧</div>
+        <h3>Smart Irrigation</h3>
+        <p>Automatic water pump control based on soil moisture levels. Save water and improve crop yield.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-purple">🌤️</div>
+        <h3>Weather Forecast</h3>
+        <p>Real-time weather data including temperature, humidity, wind speed, and conditions for your location.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-rose">🎤</div>
+        <h3>Voice Assistant</h3>
+        <p>Ask farming questions using your voice. Get AI-powered answers spoken back to you in natural language.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-teal">📊</div>
+        <h3>Mandi Prices</h3>
+        <p>Real-time market prices for agricultural commodities from government data sources across India.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer id="about">
+    <p>Built with 💚 for Indian Farmers | <a href="dashboard.html">Krishi Mitraan</a> © 2026</p>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Generate particles
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+      const p = document.createElement('div');
+      p.classList.add('particle');
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDelay = Math.random() * 8 + 's';
+      p.style.animationDuration = (6 + Math.random() * 6) + 's';
+      p.style.width = p.style.height = (2 + Math.random() * 3) + 'px';
+      particlesContainer.appendChild(p);
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
