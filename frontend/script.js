@@ -7,7 +7,7 @@
 // ── Auto-detect backend URL ────────────────────────────
 // When running locally (file:// or localhost) → use localhost:3000
 // When hosted on Netlify/cloud → use Render cloud backend
-const CLOUD_BACKEND_URL = 'https://krishi-mitra-backend.onrender.com';
+const CLOUD_BACKEND_URL = 'https://krishi-mitra-backend-n72h.onrender.com';
 const isLocalhost = (
   location.hostname === 'localhost' ||
   location.hostname === '127.0.0.1' ||
