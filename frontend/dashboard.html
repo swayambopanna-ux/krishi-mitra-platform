@@ -13,6 +13,14 @@
 </head>
 <body>
 
+  <!-- ── Animated Background (from index) ───────────────── -->
+  <div class="bg-animation">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+  </div>
+
+  <div class="particles" id="particles"></div>
   <!-- ── Sidebar ─────────────────────────────────────── -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -455,5 +463,20 @@
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1"></script>
 
   <script src="script.js"></script>
+  <script>
+    // Generate particles
+    const particlesContainer = document.getElementById('particles');
+    if (particlesContainer) {
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.classList.add('particle');
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 8 + 's';
+        p.style.animationDuration = (6 + Math.random() * 6) + 's';
+        p.style.width = p.style.height = (2 + Math.random() * 3) + 'px';
+        particlesContainer.appendChild(p);
+      }
+    }
+  </script>
 </body>
 </html>
