@@ -534,4 +534,15 @@ app.listen(PORT, '0.0.0.0', () => {
 ║   POST /detect         → AI disease detection         ║
 ╚═══════════════════════════════════════════════════════╝
   `);
+
+  if (isCloud) {
+    // ── Keep-Alive (Prevent Render from sleeping) ─────────
+    const RENDER_EXTERNAL_URL = 'https://krishi-mitra-backend-n72h.onrender.com';
+    setInterval(() => {
+      console.log(`\n⏳ [Keep-Alive] Pinging self to prevent sleep...`);
+      fetch(`${RENDER_EXTERNAL_URL}/api/health`)
+        .then(res => console.log(`   └─ Status: ${res.status} (OK)`))
+        .catch(err => console.error(`   └─ Keep-Alive Error:`, err.message));
+    }, 14 * 60 * 1000); // 14 minutes
+  }
 });
