@@ -8,6 +8,16 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ── GLOBAL ERROR HANDLERS ─────────────────────────────
+// Prevents the Node terminal from crashing/exiting completely
+// when an asynchronous error is unhandled in newer Node environments.
+process.on('uncaughtException', (err) => {
+  console.error('🔥 CRITICAL [Uncaught Exception]:', err);
+});
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('🔥 CRITICAL [Unhandled Rejection]:', reason);
+});
+
 app.use(cors({ origin: '*', methods: ['GET','POST','OPTIONS'], allowedHeaders: ['Content-Type','Authorization'] }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -338,9 +348,9 @@ app.post('/detect', upload.single('image'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No image provided' });
 
   console.log(`\n🔬 [Disease Detection] Processing: ${req.file.originalname}`);
-  const imageBuffer = fs.readFileSync(req.file.path);
 
   try {
+    const imageBuffer = fs.readFileSync(req.file.path);
     const headers = { 'Content-Type': 'application/octet-stream' };
     if (HF_API_TOKEN !== 'YOUR_HUGGINGFACE_TOKEN') {
        headers['Authorization'] = `Bearer ${HF_API_TOKEN}`;
